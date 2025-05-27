@@ -1,0 +1,24 @@
+cmake_minimum_required(VERSION 3.18)
+project(cuda_lab LANGUAGES C CXX CUDA)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+enable_language(CUDA)
+set(CMAKE_CUDA_STANDARD 17)
+set(CMAKE_CUDA_STANDARD_REQUIRED ON)
+
+include_directories(include)
+file(GLOB SRC
+    src/*.cpp
+    src/*.cu
+)
+
+add_executable(cuda_lab ${SRC})
+
+set_target_properties(cuda_lab PROPERTIES
+    CUDA_SEPARABLE_COMPILATION ON
+    CUDA_ARCHITECTURES 61 70 75 86
+)
+
+target_compile_options(cuda_lab PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:--extended-lambda>)
